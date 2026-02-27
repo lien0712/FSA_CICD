@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="ThingsBoard API Test Suite" parallel="methods" thread-count="4">
+
+    <test name="API End-to-End Flow">
+        <classes>
+            <class name="api.tests.LoginTest"/>
+            <class name="api.tests.DeviceProfileTest"/>
+            <class name="api.tests.DeviceTest"/>
+            <class name="api.tests.CustomerTest"/>
+            <class name="api.tests.AssignCustomerTest"/>
+            <class name="api.tests.UnassignDeviceTest"/>
+            <class name="api.tests.DeleteTest"/>
+        </classes>
+    </test>
+
+</suite>
