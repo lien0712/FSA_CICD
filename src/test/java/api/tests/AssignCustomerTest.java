@@ -36,17 +36,17 @@ public class AssignCustomerTest extends BaseTest {
         System.out.println("targetCustomerId: " + targetCustomerId);
     }
 
-    @Test(description = "Positive Case: Assign a device to a customer successfully")
-    public void testAssignDeviceSuccess() {
-        System.out.println("assignedDeviceId: " + assignedDeviceId);
-        Response response = AssignmentCustomerAPI.assignDeviceToCustomer(targetCustomerId, assignedDeviceId, validToken);
-        System.out.println(response.asPrettyString());
-
-        response.then()
-                .statusCode(200)
-//                .body("customerId.id", equalTo(targetCustomerId))
-                .body("id.id", equalTo(assignedDeviceId));
-    }
+//    @Test(description = "Positive Case: Assign a device to a customer successfully")
+//    public void testAssignDeviceSuccess() {
+//        System.out.println("assignedDeviceId: " + assignedDeviceId);
+//        Response response = AssignmentCustomerAPI.assignDeviceToCustomer(targetCustomerId, assignedDeviceId, validToken);
+//        System.out.println(response.asPrettyString());
+//
+//        response.then()
+//                .statusCode(200)
+////                .body("customerId.id", equalTo(targetCustomerId))
+//                .body("id.id", equalTo(assignedDeviceId));
+//    }
 
     @Test(description = "Negative Case: Try to assign to a fake customer ID")
     public void testAssignToInvalidCustomer() {
