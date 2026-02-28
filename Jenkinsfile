@@ -22,8 +22,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                // Consistency is key: use the same repo path
-                sh 'mvn test -Dmaven.repo.local=/root/.m2/repository'
+                sh 'mvn clean test -Dmaven.repo.local=/tmp/.m2'
             }
         }
     }
