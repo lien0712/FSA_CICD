@@ -21,7 +21,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "prepare ..."
-                sh 'mvn clean package'
+                sh 'mvn clean package -Dmaven.repo.local=$WORKSPACE/.m2'
             }
         }
 
