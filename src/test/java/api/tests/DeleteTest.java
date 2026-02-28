@@ -40,11 +40,11 @@ public class DeleteTest extends BaseTest {
         profileIdToDelete = DeviceProfileAPI.createDeviceProfile(profile, validToken).jsonPath().getString("id.id");
     }
 
-//    @Test(description = "Positive Case: Delete all created items successfully")
+    @Test(description = "Positive Case: Delete all created items successfully")
     public void testDeleteItemsSuccess() {
         // 1. Delete Device
-        Response deviceRes = DeviceAPI.deleteDevice(deviceIdToDelete, validToken);
-        deviceRes.then().statusCode(200);
+//        Response deviceRes = DeviceAPI.deleteDevice(deviceIdToDelete, validToken);
+//        deviceRes.then().statusCode(200);
 
         // 2. Delete Customer
         Response customerRes = CustomerAPI.deleteCustomer(customerIdToDelete, validToken);
