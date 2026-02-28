@@ -1,16 +1,11 @@
 pipeline {
-
-     agent {
-            docker {
-                image 'maven:3.9.6-eclipse-temurin-21'
-                args '-v $HOME/.m2:/root/.m2'
-            }
+    agent {
+        docker {
+            image 'maven:3.9.6-eclipse-temurin-21'
+            // Keep the volume mount consistent
+            args '-v $HOME/.m2:/root/.m2'
         }
-
-//     tools {
-//         maven 'Maven'
-//         jdk 'JDK'
-//     }
+    }
 
     stages {
         stage('Checkout') {
@@ -21,23 +16,27 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo "prepare ..."
-                sh 'mvn clean package -Dmaven.repo.local=$WORKSPACE/.m2'
+                // Using /root/.m2 ensures we use the mounted volume
+                sh 'mvn clean package -Dmaven.repo.local=/root/.m2/repository'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                // Consistency is key: use the same repo path
+                sh 'mvn test -Dmaven.repo.local=/root/.m2/repository'
             }
         }
     }
 
-   post {
-     always {
-       allure([
-         results: [[path: 'allure-results']]
-       ])
-     }
-   }
+    post {
+        always {
+            // Ensure you have configured 'Allure' in Manage Jenkins > Global Tool Configuration
+            allure([
+                includeProperties: false,
+                jdk: '',
+                results: [[path: 'target/allure-results']] // Ensure this matches your project output
+            ])
+        }
+    }
 }
