@@ -16,8 +16,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Using /root/.m2 ensures we use the mounted volume
-                sh 'mvn clean package -Dmaven.repo.local=/root/.m2/repository'
+                sh 'mvn clean package -Dmaven.repo.local=$WORKSPACE/.m2/repository'
             }
         }
 
@@ -29,14 +28,14 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            // Ensure you have configured 'Allure' in Manage Jenkins > Global Tool Configuration
-            allure([
-                includeProperties: false,
-                jdk: '',
-                results: [[path: 'target/allure-results']] // Ensure this matches your project output
-            ])
-        }
-    }
+//     post {
+//         always {
+//             // Ensure you have configured 'Allure' in Manage Jenkins > Global Tool Configuration
+//             allure([
+//                 includeProperties: false,
+//                 jdk: '',
+//                 results: [[path: 'target/allure-results']] // Ensure this matches your project output
+//             ])
+//         }
+//     }
 }
