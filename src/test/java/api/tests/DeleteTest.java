@@ -1,5 +1,7 @@
 package api.tests;
 
+import api.api.AuthAPI;
+import api.base.BaseTest;
 import api.models.CustomerRequest;
 import api.models.DeviceProfileRequest;
 import api.models.DeviceRequest;
@@ -14,7 +16,7 @@ import java.util.UUID;
 
 import static org.hamcrest.Matchers.*;
 
-public class DeleteTest {
+public class DeleteTest extends BaseTest {
 
     private String validToken;
     private String deviceIdToDelete;
@@ -22,9 +24,10 @@ public class DeleteTest {
     private String profileIdToDelete;
 
     @BeforeClass
-    public void setupPrerequisites() {
-        // 1. Get Token
-//        validToken = AuthAPI.login(new LoginRequest("loandtt1@yopmail.com", "Admin@123")).jsonPath().getString("token");
+    public void setupPrerequisites () {
+        Response response = AuthAPI.login("loandtt1@yopmail.com", "Admin@123");
+        System.out.println(response.asPrettyString());
+        validToken = response.jsonPath().getString("token");
 
         // 2. Create items specifically to test deleting them
         DeviceRequest device = new DeviceRequest("Delete_Test_Device_" + System.currentTimeMillis(), "Label");
@@ -33,8 +36,8 @@ public class DeleteTest {
         CustomerRequest customer = new CustomerRequest("Delete_Test_Customer_" + System.currentTimeMillis());
         customerIdToDelete = CustomerAPI.createCustomer(customer, validToken).jsonPath().getString("id.id");
 
-        DeviceProfileRequest profile = new DeviceProfileRequest("Delete_Test_Profile_" + System.currentTimeMillis());
-//        profileIdToDelete = DeviceProfileAPI.createDeviceProfile(profile, validToken).jsonPath().getString("id.id");
+        String profile = "Delete_Test_Profile_" + System.currentTimeMillis();
+        profileIdToDelete = DeviceProfileAPI.createDeviceProfile(profile, validToken).jsonPath().getString("id.id");
     }
 
     @Test(description = "Positive Case: Delete all created items successfully")
